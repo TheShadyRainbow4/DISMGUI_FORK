@@ -1,4 +1,4 @@
-﻿Imports Microsoft.Win32
+Imports Microsoft.Win32
 Imports System.ComponentModel
 Public Class frmMain
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
@@ -580,6 +580,17 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        Try
+            Using stream As System.IO.Stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("DISM_GUI.DISM_GUI.ico")
+                If stream IsNot Nothing Then
+                    Me.Icon = New System.Drawing.Icon(stream)
+                Else
+                    Me.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath)
+                End If
+            End Using
+        Catch ex As Exception
+        End Try
+
         cmbIndex.Text = "1"
         cmbCompression.Text = "Fast"
         cmbApplyIndex.Text = "1"
